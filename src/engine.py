@@ -1,19 +1,28 @@
 import os
-import numpy as np
-import pandas as pd
+
 import faiss
 import torch
 from datasets import load_dataset
-from sentence_transformers import SentenceTransformer
 from keybert import KeyBERT
-from transformers import pipeline
+from sentence_transformers import SentenceTransformer
+from transformers import (
+    AutoModelForSeq2SeqLM,
+    AutoModelForTokenClassification,
+    AutoTokenizer,
+)
 
-DEVICE = 0 if torch.cuda.is_available() else -1
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-EMBEDDING_MODEL = SentenceTransformer('all-MiniLM-L6-v2', device='cuda' if DEVICE == 0 else 'cpu')
+EMBEDDING_MODEL = SentenceTransformer('all-MiniLM-L6-v2', device=DEVICE.type)
 KEYWORD_MODEL = KeyBERT(model=EMBEDDING_MODEL)
-NER_PIPELINE = pipeline('ner', model='dslim/bert-base-NER', aggregation_strategy='simple', device=DEVICE)
-SUMMARIZATION_PIPELINE = pipeline('summarization', model='facebook/bart-large-cnn', device=DEVICE)
+
+SUMMARIZER_TOKENIZER = AutoTokenizer.from_pretrained('facebook/bart-large-cnn')
+SUMMARIZER_MODEL = AutoModelForSeq2SeqLM.from_pretrained('facebook/bart-large-cnn').to(DEVICE)
+SUMMARIZER_MODEL.eval()
+
+NER_TOKENIZER = AutoTokenizer.from_pretrained('dslim/bert-base-NER')
+NER_MODEL = AutoModelForTokenClassification.from_pretrained('dslim/bert-base-NER').to(DEVICE)
+NER_MODEL.eval()
 
 INDEX_PATH = 'data/index/faiss.index'
 
@@ -55,10 +64,89 @@ def initialize_system():
     return _dataframe, _faiss_index
 
 
+def summarize_text(text, max_length=180, min_length=60):
+    if not text or not text.strip():
+        return ''
+
+    inputs = SUMMARIZER_TOKENIZER(
+        text,
+        return_tensors='pt',
+        max_length=1024,
+        truncation=True,
+    )
+    inputs = {key: value.to(DEVICE) for key, value in inputs.items()}
+
+    with torch.no_grad():
+        summary_ids = SUMMARIZER_MODEL.generate(
+            **inputs,
+            max_length=max_length,
+            min_length=min_length,
+            do_sample=False,
+        )
+
+    return SUMMARIZER_TOKENIZER.decode(summary_ids[0], skip_special_tokens=True)
+
+
 def extract_entities(text):
-    raw_entities = NER_PIPELINE(text)
-    entities = [(item['word'], item['entity_group']) for item in raw_entities]
-    return entities
+    if not text or not text.strip():
+        return []
+
+    inputs = NER_TOKENIZER(
+        text,
+        return_tensors='pt',
+        return_offsets_mapping=True,
+        truncation=True,
+        max_length=512,
+    )
+    offset_mapping = inputs.pop('offset_mapping')[0].tolist()
+    inputs = {key: value.to(DEVICE) for key, value in inputs.items()}
+
+    with torch.no_grad():
+        logits = NER_MODEL(**inputs).logits
+
+    predictions = torch.argmax(logits, dim=-1)[0].cpu().tolist()
+    id_to_label = NER_MODEL.config.id2label
+
+    entities = []
+    active_entity = None
+
+    for prediction, offsets in zip(predictions, offset_mapping):
+        start, end = offsets
+        if start == end:
+            continue
+
+        label = id_to_label[prediction]
+        if label == 'O':
+            if active_entity is not None:
+                entities.append(active_entity)
+                active_entity = None
+            continue
+
+        prefix, entity_type = label.split('-', 1)
+
+        if (
+            prefix == 'B'
+            or active_entity is None
+            or active_entity['entity_group'] != entity_type
+            or start > active_entity['end'] + 1
+        ):
+            if active_entity is not None:
+                entities.append(active_entity)
+            active_entity = {
+                'start': start,
+                'end': end,
+                'entity_group': entity_type,
+            }
+        else:
+            active_entity['end'] = end
+
+    if active_entity is not None:
+        entities.append(active_entity)
+
+    return [
+        (text[entity['start']:entity['end']], entity['entity_group'])
+        for entity in entities
+    ]
 
 
 def process_query(query, k=3):
@@ -112,12 +200,9 @@ def process_query(query, k=3):
     if len(prompt) > max_input_chars:
         prompt = prompt[:max_input_chars]
 
-    summary_output = SUMMARIZATION_PIPELINE(
+    final_summary = summarize_text(
         prompt,
         max_length=180,
         min_length=60,
-        do_sample=False
     )
-
-    final_summary = summary_output[0]['summary_text']
     return final_summary
