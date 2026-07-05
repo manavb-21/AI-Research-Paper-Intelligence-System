@@ -1,0 +1,5 @@
+# Ignore data files and indexes
+data/
+__pycache__/
+*.npy
+*.index
