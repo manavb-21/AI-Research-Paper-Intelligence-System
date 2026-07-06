@@ -23,24 +23,24 @@ def inject_styles() -> None:
         """
         <style>
             :root {
-                --bg: #f5f7fb;
-                --bg-deep: #eaf0f8;
-                --surface: rgba(255, 255, 255, 0.78);
-                --surface-strong: rgba(255, 255, 255, 0.94);
-                --ink: #111827;
-                --ink-soft: #334155;
-                --muted: #64748b;
-                --line: rgba(148, 163, 184, 0.28);
-                --line-strong: rgba(100, 116, 139, 0.26);
+                --bg: #f6f8fc;
+                --bg-deep: #e8eef8;
+                --surface: rgba(255, 255, 255, 0.92);
+                --surface-strong: rgba(255, 255, 255, 0.98);
+                --ink: #0f172a;
+                --ink-soft: #1f2937;
+                --muted: #475569;
+                --line: rgba(71, 85, 105, 0.26);
+                --line-strong: rgba(51, 65, 85, 0.38);
                 --accent: #2563eb;
                 --accent-strong: #1d4ed8;
-                --accent-soft: rgba(37, 99, 235, 0.1);
+                --accent-soft: rgba(37, 99, 235, 0.12);
                 --teal: #0f766e;
-                --teal-soft: rgba(15, 118, 110, 0.1);
+                --teal-soft: rgba(15, 118, 110, 0.12);
                 --violet: #6d28d9;
-                --violet-soft: rgba(109, 40, 217, 0.1);
-                --shadow-sm: 0 10px 26px rgba(15, 23, 42, 0.07);
-                --shadow-md: 0 18px 48px rgba(15, 23, 42, 0.1);
+                --violet-soft: rgba(109, 40, 217, 0.12);
+                --shadow-sm: 0 10px 26px rgba(15, 23, 42, 0.10);
+                --shadow-md: 0 18px 48px rgba(15, 23, 42, 0.15);
                 --radius: 18px;
             }
 
@@ -53,7 +53,56 @@ def inject_styles() -> None:
                     radial-gradient(circle at 16% 4%, rgba(37, 99, 235, 0.13), transparent 30%),
                     radial-gradient(circle at 88% 12%, rgba(15, 118, 110, 0.10), transparent 28%),
                     linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 48%, #f8fafc 100%);
-                color: var(--ink);
+                color: #0f172a;
+            }
+
+            .stApp,
+            .stApp [data-testid="stAppViewContainer"],
+            .stApp [data-testid="stHeader"],
+            .stApp [data-testid="stToolbar"],
+            .stApp [data-testid="stDecoration"],
+            .stApp [data-testid="block-container"],
+            .stApp [data-testid="stVerticalBlock"],
+            .stApp [data-testid="stHorizontalBlock"] {
+                color: #0f172a;
+            }
+
+            .stMarkdown,
+            .stMarkdown p,
+            .stMarkdown li,
+            .stMarkdown span,
+            .stMarkdown div,
+            div[data-testid="stMarkdownContainer"],
+            div[data-testid="stMarkdownContainer"] p,
+            div[data-testid="stMarkdownContainer"] li,
+            div[data-testid="stMarkdownContainer"] span,
+            div[data-testid="stMarkdownContainer"] strong,
+            div[data-testid="stMarkdownContainer"] em {
+                color: #0f172a;
+            }
+
+            div[data-testid="stCaptionContainer"],
+            div[data-testid="stCaptionContainer"] p,
+            div[data-testid="stCaptionContainer"] span,
+            .stCaptionContainer,
+            .stCaptionContainer p,
+            .stCaptionContainer span {
+                color: #475569;
+            }
+
+            code,
+            pre,
+            div[data-testid="stCodeBlock"],
+            div[data-testid="stCodeBlock"] * {
+                background-color: rgba(248, 250, 252, 0.96);
+                color: #0f172a;
+            }
+
+            div[data-testid="stAlert"],
+            div[data-testid="stAlert"] *,
+            div[data-testid="stException"],
+            div[data-testid="stException"] * {
+                color: #0f172a;
             }
 
             .block-container {
@@ -63,10 +112,11 @@ def inject_styles() -> None:
 
             h1, h2, h3, p {
                 letter-spacing: 0;
+                color: #0f172a;
             }
 
             h1, h2, h3 {
-                color: var(--ink);
+                color: #0f172a;
             }
 
             div[data-testid="stForm"] {
@@ -77,6 +127,7 @@ def inject_styles() -> None:
                 backdrop-filter: blur(18px);
                 padding: 1.1rem 1.15rem 1.2rem;
                 transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+                color: #0f172a;
             }
 
             div[data-testid="stForm"]:hover {
@@ -85,8 +136,14 @@ def inject_styles() -> None:
             }
 
             div[data-testid="stTextInput"] label,
-            div[data-testid="stSlider"] label {
-                color: var(--ink-soft);
+            div[data-testid="stTextInput"] label *,
+            div[data-testid="stSlider"] label,
+            div[data-testid="stSlider"] label *,
+            label[data-testid="stWidgetLabel"],
+            label[data-testid="stWidgetLabel"] *,
+            div[data-testid="stWidgetLabel"],
+            div[data-testid="stWidgetLabel"] * {
+                color: #1f2937;
                 font-size: 0.88rem;
                 font-weight: 760;
             }
@@ -95,55 +152,150 @@ def inject_styles() -> None:
                 min-height: 3.15rem;
                 border: 1px solid var(--line-strong);
                 border-radius: 14px;
-                background: rgba(255, 255, 255, 0.92);
-                color: var(--ink);
+                background: rgba(255, 255, 255, 0.98);
+                color: #0f172a;
                 font-size: 1rem;
                 padding: 0.85rem 1rem;
                 box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
                 transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+                caret-color: #1d4ed8;
+                -webkit-text-fill-color: #0f172a;
+            }
+
+            div[data-testid="stTextInput"] input::placeholder {
+                color: #64748b;
+                opacity: 1;
+                -webkit-text-fill-color: #64748b;
             }
 
             div[data-testid="stTextInput"] input:focus {
                 border-color: rgba(37, 99, 235, 0.72);
                 box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.11);
                 background: #ffffff;
+                color: #0f172a;
+                -webkit-text-fill-color: #0f172a;
             }
 
             div[data-testid="stSlider"] {
                 padding-top: 0.1rem;
+                color: #0f172a;
             }
 
-            div[data-testid="stSlider"] [data-baseweb="slider"] > div {
-                color: var(--accent);
+            div[data-testid="stSlider"] [data-baseweb="slider"],
+            div[data-testid="stSlider"] [data-baseweb="slider"] * {
+                color: #1d4ed8;
             }
 
-            .stButton > button {
-                min-height: 3.15rem;
-                border: 0;
+            div[data-testid="stSlider"] [role="slider"] {
+                background-color: #ffffff;
+                border: 2px solid #1d4ed8;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+            }
+
+            div[data-testid="stSlider"] div[data-testid="stTickBar"],
+            div[data-testid="stSlider"] div[data-testid="stTickBar"] * {
+                color: #475569;
+            }
+
+                    /* ================= BUTTON ================= */
+
+            div.stButton > button,
+            .stButton > button,
+            button[kind="primary"],
+            button[kind="secondary"],
+            button[data-testid="stBaseButton-primary"],
+            button[data-testid="stBaseButton-secondary"],
+            button[data-testid="stBaseButton-secondaryFormSubmit"],
+            button[data-testid="baseButton-primary"],
+            button[data-testid="baseButton-secondary"],
+            button[data-testid="baseButton-secondaryFormSubmit"],
+            div[data-testid="stFormSubmitButton"] button,
+            div[data-testid="stFormSubmitButton"] button[kind],
+            div[data-testid="stFormSubmitButton"] button[data-testid] {
+
+                width: 100%;
+                min-height: 3.3rem;
+
+                border: none !important;
                 border-radius: 14px;
-                background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
-                color: #ffffff;
-                font-size: 0.96rem;
-                font-weight: 800;
-                box-shadow: 0 14px 26px rgba(37, 99, 235, 0.24);
-                transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+
+                background: linear-gradient(135deg,#2563eb,#1d4ed8) !important;
+                background-color: #2563eb !important;
+
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+
+                font-size: 1rem;
+                font-weight: 700;
+
+                cursor:pointer;
+
+                transition: all .25s ease;
+
+                box-shadow:
+                    0 8px 20px rgba(37,99,235,.25);
+
             }
 
-            .stButton > button:hover {
-                color: #ffffff;
-                filter: brightness(1.03);
-                transform: translateY(-1px);
-                box-shadow: 0 18px 34px rgba(37, 99, 235, 0.3);
+            div.stButton > button:hover,
+            .stButton > button:hover,
+            button[kind="primary"]:hover,
+            button[kind="secondary"]:hover,
+            button[data-testid="stBaseButton-primary"]:hover,
+            button[data-testid="stBaseButton-secondary"]:hover,
+            button[data-testid="stBaseButton-secondaryFormSubmit"]:hover,
+            button[data-testid="baseButton-primary"]:hover,
+            button[data-testid="baseButton-secondary"]:hover,
+            button[data-testid="baseButton-secondaryFormSubmit"]:hover,
+            div[data-testid="stFormSubmitButton"] button:hover {
+
+                transform:translateY(-2px);
+
+                background:
+                linear-gradient(135deg,#1d4ed8,#1e40af) !important;
+                background-color: #1d4ed8 !important;
+
+                color:white !important;
+                -webkit-text-fill-color:white !important;
+
             }
 
-            .stButton > button:active {
-                transform: translateY(0);
+            div.stButton > button *,
+            .stButton > button *,
+            button[kind="primary"],
+            button[kind="primary"] *,
+            button[kind="secondary"],
+            button[kind="secondary"] *,
+            button[data-testid="stBaseButton-primary"],
+            button[data-testid="stBaseButton-primary"] *,
+            button[data-testid="stBaseButton-secondary"],
+            button[data-testid="stBaseButton-secondary"] *,
+            button[data-testid="stBaseButton-secondaryFormSubmit"],
+            button[data-testid="stBaseButton-secondaryFormSubmit"] *,
+            button[data-testid="baseButton-primary"],
+            button[data-testid="baseButton-primary"] *,
+            button[data-testid="baseButton-secondary"],
+            button[data-testid="baseButton-secondary"] *,
+            button[data-testid="baseButton-secondaryFormSubmit"],
+            button[data-testid="baseButton-secondaryFormSubmit"] *,
+            div[data-testid="stFormSubmitButton"] button,
+            div[data-testid="stFormSubmitButton"] button *,
+            div[data-testid="stFormSubmitButton"] p,
+            div[data-testid="stFormSubmitButton"] span {
+
+                color:white !important;
+
+                fill:white !important;
+
+                -webkit-text-fill-color:white !important;
+
             }
 
             section[data-testid="stSidebar"] {
                 background:
-                    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
                 border-right: 1px solid var(--line);
+                color: #0f172a;
             }
 
             section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
@@ -154,15 +306,37 @@ def inject_styles() -> None:
             section[data-testid="stSidebar"] h2,
             section[data-testid="stSidebar"] h3,
             section[data-testid="stSidebar"] p,
-            section[data-testid="stSidebar"] li {
-                color: var(--ink);
+            section[data-testid="stSidebar"] li,
+            section[data-testid="stSidebar"] span,
+            section[data-testid="stSidebar"] div,
+            section[data-testid="stSidebar"] label,
+            section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+            section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *,
+            section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+            section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] * {
+                color: #0f172a;
+            }
+
+            section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+            section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] *,
+            section[data-testid="stSidebar"] .sidebar-copy,
+            section[data-testid="stSidebar"] .pipeline-arrow {
+                color: #475569;
+            }
+
+            section[data-testid="stSidebar"] code,
+            section[data-testid="stSidebar"] pre,
+            section[data-testid="stSidebar"] div[data-testid="stCodeBlock"],
+            section[data-testid="stSidebar"] div[data-testid="stCodeBlock"] * {
+                background-color: #f8fafc;
+                color: #0f172a;
             }
 
             .hero {
                 position: relative;
                 overflow: hidden;
                 background:
-                    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.62)),
+                    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
                     linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(15, 118, 110, 0.08));
                 border: 1px solid var(--line);
                 border-radius: 26px;
@@ -190,7 +364,7 @@ def inject_styles() -> None:
                 border: 1px solid rgba(37, 99, 235, 0.18);
                 border-radius: 999px;
                 background: rgba(37, 99, 235, 0.08);
-                color: var(--accent-strong);
+                color: #1d4ed8;
                 font-size: 0.78rem;
                 font-weight: 820;
                 letter-spacing: 0.06em;
@@ -200,7 +374,7 @@ def inject_styles() -> None:
             }
 
             .hero-title {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: clamp(2.2rem, 5vw, 4.25rem);
                 font-weight: 880;
                 line-height: 1.02;
@@ -209,7 +383,7 @@ def inject_styles() -> None:
             }
 
             .hero-subtitle {
-                color: var(--ink-soft);
+                color: #1f2937;
                 font-size: clamp(1rem, 1.6vw, 1.18rem);
                 font-weight: 640;
                 line-height: 1.65;
@@ -226,8 +400,8 @@ def inject_styles() -> None:
             .hero-chip {
                 border: 1px solid var(--line);
                 border-radius: 999px;
-                background: rgba(255, 255, 255, 0.72);
-                color: var(--ink-soft);
+                background: rgba(255, 255, 255, 0.88);
+                color: #1f2937;
                 font-size: 0.84rem;
                 font-weight: 720;
                 padding: 0.42rem 0.7rem;
@@ -242,14 +416,14 @@ def inject_styles() -> None:
             }
 
             .section-title {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 1.18rem;
                 font-weight: 840;
                 margin: 0;
             }
 
             .section-note {
-                color: var(--muted);
+                color: #475569;
                 font-size: 0.88rem;
                 font-weight: 650;
             }
@@ -271,6 +445,7 @@ def inject_styles() -> None:
                 border-radius: var(--radius);
                 box-shadow: var(--shadow-sm);
                 backdrop-filter: blur(18px);
+                color: #0f172a;
             }
 
             .metric-card,
@@ -293,7 +468,7 @@ def inject_styles() -> None:
             }
 
             .metric-label {
-                color: var(--muted);
+                color: #475569;
                 font-size: 0.74rem;
                 font-weight: 820;
                 letter-spacing: 0.055em;
@@ -301,7 +476,7 @@ def inject_styles() -> None:
             }
 
             .metric-value {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 1.55rem;
                 font-weight: 880;
                 line-height: 1.1;
@@ -314,14 +489,14 @@ def inject_styles() -> None:
             }
 
             .summary-title {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 1.12rem;
                 font-weight: 860;
                 margin-bottom: 0.7rem;
             }
 
             .summary-body {
-                color: #243042;
+                color: #1f2937;
                 font-size: 1.03rem;
                 line-height: 1.78;
             }
@@ -340,7 +515,7 @@ def inject_styles() -> None:
             }
 
             .paper-title {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 1.04rem;
                 font-weight: 820;
                 line-height: 1.45;
@@ -354,7 +529,7 @@ def inject_styles() -> None:
                 border: 1px solid rgba(37, 99, 235, 0.22);
                 border-radius: 999px;
                 background: var(--accent-soft);
-                color: var(--accent-strong);
+                color: #1d4ed8;
                 font-size: 0.82rem;
                 font-weight: 820;
                 line-height: 1;
@@ -369,7 +544,7 @@ def inject_styles() -> None:
             }
 
             .chip-group-title {
-                color: var(--ink-soft);
+                color: #1f2937;
                 font-size: 0.78rem;
                 font-weight: 840;
                 letter-spacing: 0.045em;
@@ -403,7 +578,7 @@ def inject_styles() -> None:
             }
 
             .empty-card {
-                color: var(--muted);
+                color: #334155;
                 font-size: 0.98rem;
                 line-height: 1.7;
                 padding: 1.15rem 1.25rem;
@@ -412,19 +587,65 @@ def inject_styles() -> None:
             .status-card {
                 padding: 1rem 1.1rem;
                 margin-top: 1rem;
+                color: #0f172a;
+            }
+
+            div[data-testid="stStatusWidget"],
+            div[data-testid="stStatus"],
+            details[data-testid="stStatusWidget"],
+            details[data-testid="stStatus"],
+            div[data-testid="stStatusWidget"] details,
+            div[data-testid="stStatus"] details {
+                background: rgba(255, 255, 255, 0.96) !important;
+                background-color: rgba(255, 255, 255, 0.96) !important;
+                color: #0f172a !important;
+                border-color: rgba(71, 85, 105, 0.26) !important;
+                border-radius: 14px !important;
+                box-shadow: 0 10px 26px rgba(15, 23, 42, 0.10);
+            }
+
+            div[data-testid="stStatusWidget"] *,
+            div[data-testid="stStatus"] *,
+            details[data-testid="stStatusWidget"] *,
+            details[data-testid="stStatus"] * {
+                color: #0f172a !important;
+                -webkit-text-fill-color: #0f172a !important;
+            }
+
+            div[data-testid="stStatusWidget"] summary,
+            div[data-testid="stStatusWidget"] summary *,
+            div[data-testid="stStatus"] summary,
+            div[data-testid="stStatus"] summary *,
+            div[data-testid="stStatusWidget"] [data-testid="stStatusLabel"],
+            div[data-testid="stStatusWidget"] [data-testid="stStatusLabel"] *,
+            div[data-testid="stStatus"] [data-testid="stStatusLabel"],
+            div[data-testid="stStatus"] [data-testid="stStatusLabel"] * {
+                background: transparent !important;
+                color: #0f172a !important;
+                font-weight: 760;
+                -webkit-text-fill-color: #0f172a !important;
+            }
+
+            div[data-testid="stStatusWidget"] [data-testid="stStatusContent"],
+            div[data-testid="stStatus"] [data-testid="stStatusContent"],
+            div[data-testid="stStatusWidget"] [data-testid="stStatusContent"] *,
+            div[data-testid="stStatus"] [data-testid="stStatusContent"] * {
+                background: transparent !important;
+                color: #0f172a !important;
+                -webkit-text-fill-color: #0f172a !important;
             }
 
             .sidebar-brand {
                 border: 1px solid var(--line);
                 border-radius: 18px;
-                background: rgba(255, 255, 255, 0.8);
+                background: rgba(255, 255, 255, 0.94);
                 box-shadow: var(--shadow-sm);
                 padding: 1rem;
                 margin-bottom: 1rem;
             }
 
             .sidebar-title {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 1.22rem;
                 font-weight: 880;
                 line-height: 1.2;
@@ -432,13 +653,13 @@ def inject_styles() -> None:
             }
 
             .sidebar-copy {
-                color: var(--muted);
+                color: #475569;
                 font-size: 0.9rem;
                 line-height: 1.55;
             }
 
             .sidebar-section {
-                color: var(--ink);
+                color: #0f172a;
                 font-size: 0.8rem;
                 font-weight: 840;
                 letter-spacing: 0.06em;
@@ -449,7 +670,7 @@ def inject_styles() -> None:
             .pipeline {
                 border: 1px solid var(--line);
                 border-radius: 16px;
-                background: rgba(255, 255, 255, 0.62);
+                background: rgba(255, 255, 255, 0.86);
                 padding: 0.78rem;
             }
 
@@ -460,7 +681,7 @@ def inject_styles() -> None:
                 border: 1px solid rgba(37, 99, 235, 0.14);
                 border-radius: 12px;
                 background: rgba(37, 99, 235, 0.055);
-                color: var(--ink-soft);
+                color: #1f2937;
                 font-size: 0.86rem;
                 font-weight: 760;
                 min-height: 2.25rem;
@@ -469,7 +690,7 @@ def inject_styles() -> None:
             }
 
             .pipeline-arrow {
-                color: var(--muted);
+                color: #475569;
                 font-size: 1rem;
                 font-weight: 800;
                 line-height: 1;
@@ -486,8 +707,8 @@ def inject_styles() -> None:
             .stack-chip {
                 border: 1px solid var(--line);
                 border-radius: 999px;
-                background: rgba(255, 255, 255, 0.72);
-                color: var(--ink-soft);
+                background: rgba(255, 255, 255, 0.9);
+                color: #1f2937;
                 font-size: 0.78rem;
                 font-weight: 720;
                 padding: 0.35rem 0.56rem;
@@ -495,7 +716,7 @@ def inject_styles() -> None:
 
             .footer {
                 border-top: 1px solid var(--line);
-                color: var(--muted);
+                color: #475569;
                 font-size: 0.9rem;
                 font-weight: 620;
                 margin-top: 2rem;
