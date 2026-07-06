@@ -23,214 +23,515 @@ def inject_styles() -> None:
         """
         <style>
             :root {
-                --ink: #172033;
-                --muted: #617086;
-                --line: #dce3ee;
-                --panel: #ffffff;
-                --soft: #f5f7fb;
-                --accent: #2264d1;
-                --accent-dark: #184a9b;
-                --success: #0f766e;
+                --bg: #f5f7fb;
+                --bg-deep: #eaf0f8;
+                --surface: rgba(255, 255, 255, 0.78);
+                --surface-strong: rgba(255, 255, 255, 0.94);
+                --ink: #111827;
+                --ink-soft: #334155;
+                --muted: #64748b;
+                --line: rgba(148, 163, 184, 0.28);
+                --line-strong: rgba(100, 116, 139, 0.26);
+                --accent: #2563eb;
+                --accent-strong: #1d4ed8;
+                --accent-soft: rgba(37, 99, 235, 0.1);
+                --teal: #0f766e;
+                --teal-soft: rgba(15, 118, 110, 0.1);
+                --violet: #6d28d9;
+                --violet-soft: rgba(109, 40, 217, 0.1);
+                --shadow-sm: 0 10px 26px rgba(15, 23, 42, 0.07);
+                --shadow-md: 0 18px 48px rgba(15, 23, 42, 0.1);
+                --radius: 18px;
+            }
+
+            html {
+                scroll-behavior: smooth;
             }
 
             .stApp {
                 background:
-                    linear-gradient(180deg, #f7f9fd 0%, #eef3f9 45%, #f8fafc 100%);
+                    radial-gradient(circle at 16% 4%, rgba(37, 99, 235, 0.13), transparent 30%),
+                    radial-gradient(circle at 88% 12%, rgba(15, 118, 110, 0.10), transparent 28%),
+                    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 48%, #f8fafc 100%);
                 color: var(--ink);
             }
 
             .block-container {
-                padding-top: 2.25rem;
-                padding-bottom: 1.5rem;
                 max-width: 1180px;
+                padding: 2.2rem 2rem 1.6rem;
+            }
+
+            h1, h2, h3, p {
+                letter-spacing: 0;
             }
 
             h1, h2, h3 {
-                letter-spacing: 0;
                 color: var(--ink);
             }
 
-            .app-header {
-                border-bottom: 1px solid var(--line);
-                padding-bottom: 1.2rem;
-                margin-bottom: 1.3rem;
+            div[data-testid="stForm"] {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-sm);
+                backdrop-filter: blur(18px);
+                padding: 1.1rem 1.15rem 1.2rem;
+                transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
             }
 
-            .app-kicker {
+            div[data-testid="stForm"]:hover {
+                border-color: rgba(37, 99, 235, 0.25);
+                box-shadow: var(--shadow-md);
+            }
+
+            div[data-testid="stTextInput"] label,
+            div[data-testid="stSlider"] label {
+                color: var(--ink-soft);
+                font-size: 0.88rem;
+                font-weight: 760;
+            }
+
+            div[data-testid="stTextInput"] input {
+                min-height: 3.15rem;
+                border: 1px solid var(--line-strong);
+                border-radius: 14px;
+                background: rgba(255, 255, 255, 0.92);
+                color: var(--ink);
+                font-size: 1rem;
+                padding: 0.85rem 1rem;
+                box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+                transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+            }
+
+            div[data-testid="stTextInput"] input:focus {
+                border-color: rgba(37, 99, 235, 0.72);
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.11);
+                background: #ffffff;
+            }
+
+            div[data-testid="stSlider"] {
+                padding-top: 0.1rem;
+            }
+
+            div[data-testid="stSlider"] [data-baseweb="slider"] > div {
                 color: var(--accent);
-                font-size: 0.82rem;
-                font-weight: 700;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                margin-bottom: 0.35rem;
             }
 
-            .app-title {
-                color: var(--ink);
-                font-size: clamp(2rem, 4vw, 3.5rem);
+            .stButton > button {
+                min-height: 3.15rem;
+                border: 0;
+                border-radius: 14px;
+                background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+                color: #ffffff;
+                font-size: 0.96rem;
                 font-weight: 800;
-                line-height: 1.05;
+                box-shadow: 0 14px 26px rgba(37, 99, 235, 0.24);
+                transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+            }
+
+            .stButton > button:hover {
+                color: #ffffff;
+                filter: brightness(1.03);
+                transform: translateY(-1px);
+                box-shadow: 0 18px 34px rgba(37, 99, 235, 0.3);
+            }
+
+            .stButton > button:active {
+                transform: translateY(0);
+            }
+
+            section[data-testid="stSidebar"] {
+                background:
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.96));
+                border-right: 1px solid var(--line);
+            }
+
+            section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+                padding-top: 1.6rem;
+            }
+
+            section[data-testid="stSidebar"] h1,
+            section[data-testid="stSidebar"] h2,
+            section[data-testid="stSidebar"] h3,
+            section[data-testid="stSidebar"] p,
+            section[data-testid="stSidebar"] li {
+                color: var(--ink);
+            }
+
+            .hero {
+                position: relative;
+                overflow: hidden;
+                background:
+                    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.62)),
+                    linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(15, 118, 110, 0.08));
+                border: 1px solid var(--line);
+                border-radius: 26px;
+                box-shadow: var(--shadow-md);
+                backdrop-filter: blur(20px);
+                padding: clamp(1.35rem, 3vw, 2.25rem);
+                margin-bottom: 1.2rem;
+            }
+
+            .hero::after {
+                content: "";
+                position: absolute;
+                width: 220px;
+                height: 220px;
+                right: -90px;
+                top: -90px;
+                background: radial-gradient(circle, rgba(37, 99, 235, 0.18), transparent 70%);
+                pointer-events: none;
+            }
+
+            .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                border: 1px solid rgba(37, 99, 235, 0.18);
+                border-radius: 999px;
+                background: rgba(37, 99, 235, 0.08);
+                color: var(--accent-strong);
+                font-size: 0.78rem;
+                font-weight: 820;
+                letter-spacing: 0.06em;
+                line-height: 1;
+                padding: 0.48rem 0.72rem;
+                text-transform: uppercase;
+            }
+
+            .hero-title {
+                color: var(--ink);
+                font-size: clamp(2.2rem, 5vw, 4.25rem);
+                font-weight: 880;
+                line-height: 1.02;
+                margin: 1rem 0 0.75rem;
+                max-width: 920px;
+            }
+
+            .hero-subtitle {
+                color: var(--ink-soft);
+                font-size: clamp(1rem, 1.6vw, 1.18rem);
+                font-weight: 640;
+                line-height: 1.65;
+                max-width: 790px;
+                margin-bottom: 1.1rem;
+            }
+
+            .hero-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+            }
+
+            .hero-chip {
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.72);
+                color: var(--ink-soft);
+                font-size: 0.84rem;
+                font-weight: 720;
+                padding: 0.42rem 0.7rem;
+            }
+
+            .section-heading {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                margin: 1.35rem 0 0.65rem;
+            }
+
+            .section-title {
+                color: var(--ink);
+                font-size: 1.18rem;
+                font-weight: 840;
                 margin: 0;
             }
 
-            .app-subtitle {
+            .section-note {
                 color: var(--muted);
-                font-size: 1.05rem;
-                line-height: 1.65;
-                max-width: 780px;
-                margin-top: 0.8rem;
+                font-size: 0.88rem;
+                font-weight: 650;
             }
 
             .metric-strip {
                 display: grid;
                 grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 0.8rem;
-                margin: 1.2rem 0 1.5rem;
+                gap: 0.9rem;
+                margin: 1.15rem 0 1.35rem;
             }
 
-            .metric-card, .summary-card, .paper-card, .empty-card {
-                background: rgba(255, 255, 255, 0.92);
+            .metric-card,
+            .summary-card,
+            .paper-card,
+            .empty-card,
+            .status-card {
+                background: var(--surface-strong);
                 border: 1px solid var(--line);
-                border-radius: 8px;
-                box-shadow: 0 14px 36px rgba(31, 45, 71, 0.08);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-sm);
+                backdrop-filter: blur(18px);
+            }
+
+            .metric-card,
+            .summary-card,
+            .paper-card,
+            .empty-card {
+                transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+            }
+
+            .metric-card:hover,
+            .summary-card:hover,
+            .paper-card:hover {
+                border-color: rgba(37, 99, 235, 0.22);
+                box-shadow: var(--shadow-md);
+                transform: translateY(-2px);
             }
 
             .metric-card {
-                padding: 0.9rem 1rem;
+                padding: 1rem 1.05rem;
             }
 
             .metric-label {
                 color: var(--muted);
-                font-size: 0.78rem;
-                font-weight: 700;
+                font-size: 0.74rem;
+                font-weight: 820;
+                letter-spacing: 0.055em;
                 text-transform: uppercase;
             }
 
             .metric-value {
                 color: var(--ink);
-                font-size: 1.35rem;
-                font-weight: 800;
-                margin-top: 0.2rem;
+                font-size: 1.55rem;
+                font-weight: 880;
+                line-height: 1.1;
+                margin-top: 0.34rem;
             }
 
             .summary-card {
-                padding: 1.25rem 1.35rem;
-                margin-top: 1rem;
+                padding: clamp(1.15rem, 2.5vw, 1.65rem);
+                margin-top: 0.75rem;
             }
 
-            .summary-title, .section-title {
+            .summary-title {
                 color: var(--ink);
-                font-size: 1.05rem;
-                font-weight: 800;
-                margin-bottom: 0.65rem;
+                font-size: 1.12rem;
+                font-weight: 860;
+                margin-bottom: 0.7rem;
             }
 
             .summary-body {
-                color: #263247;
-                line-height: 1.75;
-                font-size: 1.02rem;
+                color: #243042;
+                font-size: 1.03rem;
+                line-height: 1.78;
             }
 
             .paper-card {
-                padding: 1.1rem 1.2rem;
-                margin: 0.9rem 0;
+                padding: clamp(1.05rem, 2.4vw, 1.35rem);
+                margin: 0.92rem 0;
+            }
+
+            .paper-topline {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-bottom: 0.8rem;
             }
 
             .paper-title {
                 color: var(--ink);
-                font-size: 1.02rem;
-                font-weight: 800;
-                line-height: 1.4;
-                margin-bottom: 0.4rem;
+                font-size: 1.04rem;
+                font-weight: 820;
+                line-height: 1.45;
+                margin: 0;
             }
 
-            .score-pill {
+            .score-badge {
+                flex: 0 0 auto;
                 display: inline-flex;
                 align-items: center;
-                border: 1px solid rgba(34, 100, 209, 0.24);
+                border: 1px solid rgba(37, 99, 235, 0.22);
                 border-radius: 999px;
-                color: var(--accent-dark);
-                background: rgba(34, 100, 209, 0.08);
+                background: var(--accent-soft);
+                color: var(--accent-strong);
                 font-size: 0.82rem;
-                font-weight: 750;
-                padding: 0.2rem 0.6rem;
-                margin-bottom: 0.65rem;
+                font-weight: 820;
+                line-height: 1;
+                padding: 0.46rem 0.68rem;
+                white-space: nowrap;
+            }
+
+            .paper-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.9rem;
+            }
+
+            .chip-group-title {
+                color: var(--ink-soft);
+                font-size: 0.78rem;
+                font-weight: 840;
+                letter-spacing: 0.045em;
+                text-transform: uppercase;
+                margin-bottom: 0.45rem;
             }
 
             .tag-row {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.42rem;
-                margin-top: 0.45rem;
+                gap: 0.46rem;
             }
 
             .tag {
-                border: 1px solid #d8e1ef;
-                background: #f7f9fd;
+                display: inline-flex;
+                align-items: center;
+                border: 1px solid rgba(37, 99, 235, 0.15);
                 border-radius: 999px;
-                color: #344258;
+                background: rgba(37, 99, 235, 0.07);
+                color: #1e3a8a;
                 font-size: 0.8rem;
-                padding: 0.22rem 0.55rem;
+                font-weight: 720;
+                line-height: 1;
+                padding: 0.42rem 0.62rem;
             }
 
             .entity-tag {
-                border-color: rgba(15, 118, 110, 0.24);
-                background: rgba(15, 118, 110, 0.08);
-                color: #0f5f59;
+                border-color: rgba(15, 118, 110, 0.18);
+                background: var(--teal-soft);
+                color: #115e59;
             }
 
             .empty-card {
                 color: var(--muted);
-                padding: 1.1rem 1.2rem;
-                line-height: 1.65;
+                font-size: 0.98rem;
+                line-height: 1.7;
+                padding: 1.15rem 1.25rem;
             }
 
-            .footer {
+            .status-card {
+                padding: 1rem 1.1rem;
+                margin-top: 1rem;
+            }
+
+            .sidebar-brand {
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                background: rgba(255, 255, 255, 0.8);
+                box-shadow: var(--shadow-sm);
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .sidebar-title {
+                color: var(--ink);
+                font-size: 1.22rem;
+                font-weight: 880;
+                line-height: 1.2;
+                margin-bottom: 0.4rem;
+            }
+
+            .sidebar-copy {
                 color: var(--muted);
-                border-top: 1px solid var(--line);
-                font-size: 0.88rem;
-                margin-top: 2rem;
-                padding-top: 1rem;
+                font-size: 0.9rem;
+                line-height: 1.55;
+            }
+
+            .sidebar-section {
+                color: var(--ink);
+                font-size: 0.8rem;
+                font-weight: 840;
+                letter-spacing: 0.06em;
+                margin: 1.1rem 0 0.55rem;
+                text-transform: uppercase;
+            }
+
+            .pipeline {
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                background: rgba(255, 255, 255, 0.62);
+                padding: 0.78rem;
+            }
+
+            .pipeline-step {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid rgba(37, 99, 235, 0.14);
+                border-radius: 12px;
+                background: rgba(37, 99, 235, 0.055);
+                color: var(--ink-soft);
+                font-size: 0.86rem;
+                font-weight: 760;
+                min-height: 2.25rem;
+                padding: 0.45rem 0.65rem;
                 text-align: center;
             }
 
-            section[data-testid="stSidebar"] {
-                background: #ffffff;
-                border-right: 1px solid var(--line);
+            .pipeline-arrow {
+                color: var(--muted);
+                font-size: 1rem;
+                font-weight: 800;
+                line-height: 1;
+                padding: 0.26rem 0;
+                text-align: center;
             }
 
-            section[data-testid="stSidebar"] h2,
-            section[data-testid="stSidebar"] h3 {
-                color: var(--ink);
+            .stack-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.42rem;
             }
 
-            .stTextInput input {
-                border-radius: 8px;
+            .stack-chip {
+                border: 1px solid var(--line);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.72);
+                color: var(--ink-soft);
+                font-size: 0.78rem;
+                font-weight: 720;
+                padding: 0.35rem 0.56rem;
             }
 
-            .stButton > button {
-                border-radius: 8px;
-                background: var(--accent);
-                color: white;
-                border: 1px solid var(--accent);
-                font-weight: 750;
-                min-height: 2.8rem;
+            .footer {
+                border-top: 1px solid var(--line);
+                color: var(--muted);
+                font-size: 0.9rem;
+                font-weight: 620;
+                margin-top: 2rem;
+                padding: 1.15rem 0 0.2rem;
+                text-align: center;
             }
 
-            .stButton > button:hover {
-                background: var(--accent-dark);
-                border-color: var(--accent-dark);
-                color: white;
-            }
+            @media (max-width: 900px) {
+                .block-container {
+                    padding-left: 1.1rem;
+                    padding-right: 1.1rem;
+                }
 
-            @media (max-width: 760px) {
-                .metric-strip {
+                .metric-strip,
+                .paper-grid {
                     grid-template-columns: 1fr;
                 }
 
-                .block-container {
-                    padding-left: 1rem;
-                    padding-right: 1rem;
+                .paper-topline {
+                    align-items: flex-start;
+                    flex-direction: column;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .hero {
+                    border-radius: 20px;
+                    padding: 1.1rem;
+                }
+
+                .hero-title {
+                    font-size: 2.05rem;
+                }
+
+                .hero-meta {
+                    gap: 0.4rem;
                 }
             }
         </style>
@@ -317,12 +618,12 @@ def normalize_entities(raw_entities: Any) -> list[str]:
         elif isinstance(item, (list, tuple)) and item:
             name = str(item[0])
             entity_type = str(item[1]) if len(item) > 1 else ""
-            labels.append(f"{name} · {entity_type}" if entity_type else name)
+            labels.append(f"{name} - {entity_type}" if entity_type else name)
         elif isinstance(item, dict):
             name = item.get("word") or item.get("text") or item.get("entity")
             entity_type = item.get("entity_group") or item.get("type") or item.get("label")
             if name and entity_type:
-                labels.append(f"{name} · {entity_type}")
+                labels.append(f"{name} - {entity_type}")
             elif name:
                 labels.append(str(name))
 
@@ -340,37 +641,66 @@ def format_score(score: Any) -> str:
 def render_sidebar() -> None:
     """Render the project overview and runtime settings in the sidebar."""
     with st.sidebar:
-        st.title("Research Intelligence")
-        st.caption("Semantic discovery for machine learning papers")
         st.markdown(
             """
-            This interface connects to your FastAPI backend and runs:
-
-            - SentenceTransformer query embeddings
-            - FAISS semantic retrieval
-            - KeyBERT keyword extraction
-            - BERT named entity recognition
-            - BART-Large-CNN summary generation
-            """
+            <div class="sidebar-brand">
+                <div class="sidebar-title">AI Research Paper Intelligence</div>
+                <div class="sidebar-copy">
+                    A semantic research assistant for discovering, enriching, and
+                    synthesizing machine learning papers.
+                </div>
+            </div>
+            <div class="sidebar-section">Pipeline</div>
+            <div class="pipeline">
+                <div class="pipeline-step">Sentence Transformer</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step">FAISS</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step">KeyBERT</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step">NER</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step">BART</div>
+                <div class="pipeline-arrow">↓</div>
+                <div class="pipeline-step">Summary</div>
+            </div>
+            <div class="sidebar-section">Tech Stack</div>
+            <div class="stack-grid">
+                <span class="stack-chip">FastAPI</span>
+                <span class="stack-chip">PyTorch</span>
+                <span class="stack-chip">Transformers</span>
+                <span class="stack-chip">FAISS</span>
+                <span class="stack-chip">KeyBERT</span>
+                <span class="stack-chip">BERT</span>
+                <span class="stack-chip">Streamlit</span>
+            </div>
+            <div class="sidebar-section">Backend</div>
+            """,
+            unsafe_allow_html=True,
         )
-        st.divider()
-        st.subheader("Backend")
         st.code(API_BASE_URL, language="text")
-        st.caption("Override with the API_BASE_URL environment variable.")
+        st.caption("Set API_BASE_URL to point this UI at another backend.")
 
 
 def render_header() -> None:
     """Render the main application header."""
     st.markdown(
         """
-        <div class="app-header">
-            <div class="app-kicker">AI Research Paper Intelligence System</div>
-            <h1 class="app-title">Explore research papers with semantic search and AI synthesis.</h1>
-            <div class="app-subtitle">
-                Ask a technical question, retrieve the most relevant ML papers, and review
-                a concise generated summary with supporting paper metadata.
+        <section class="hero">
+            <div class="eyebrow">Modern AI Research Platform</div>
+            <h1 class="hero-title">AI Research Paper Intelligence System</h1>
+            <div class="hero-subtitle">
+                Semantic Search • Named Entity Recognition • Generative AI
+                <br>
+                Ask a research question and receive a synthesized answer backed by
+                retrieved machine learning papers, keywords, and entities.
             </div>
-        </div>
+            <div class="hero-meta">
+                <span class="hero-chip">Semantic retrieval</span>
+                <span class="hero-chip">Paper intelligence</span>
+                <span class="hero-chip">AI synthesis</span>
+            </div>
+        </section>
         """,
         unsafe_allow_html=True,
     )
@@ -395,8 +725,8 @@ def render_metrics(payload: dict[str, Any]) -> None:
                 <div class="metric-value">{word_count}</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Backend</div>
-                <div class="metric-value">FastAPI</div>
+                <div class="metric-label">Pipeline</div>
+                <div class="metric-value">AI Search</div>
             </div>
         </div>
         """,
@@ -416,8 +746,11 @@ def render_summary(payload: dict[str, Any]) -> None:
 
     st.markdown(
         f"""
+        <div class="section-heading">
+            <h2 class="section-title">AI Generated Summary</h2>
+            <div class="section-note">Synthesized from retrieved papers</div>
+        </div>
         <div class="summary-card">
-            <div class="summary-title">AI Generated Summary</div>
             <div class="summary-body">{escape(str(summary))}</div>
         </div>
         """,
@@ -447,7 +780,15 @@ def render_top_papers(payload: dict[str, Any]) -> None:
         )
         return
 
-    st.markdown('<div class="section-title">Top Retrieved Papers</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-heading">
+            <h2 class="section-title">Top Retrieved Papers</h2>
+            <div class="section-note">Ranked by semantic similarity</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     for paper in top_papers:
         if not isinstance(paper, dict):
@@ -460,18 +801,22 @@ def render_top_papers(payload: dict[str, Any]) -> None:
 
         st.markdown(
             f"""
-            <div class="paper-card">
-                <div class="paper-title">{escape(title)}</div>
-                <div class="score-pill">Similarity score: {format_score(score)}</div>
-                <div>
-                    <strong>Keywords</strong>
-                    <div class="tag-row">{render_tag_row(keywords)}</div>
+            <article class="paper-card">
+                <div class="paper-topline">
+                    <h3 class="paper-title">{escape(title)}</h3>
+                    <span class="score-badge">Similarity {format_score(score)}</span>
                 </div>
-                <div style="margin-top: 0.75rem;">
-                    <strong>Named entities</strong>
-                    <div class="tag-row">{render_tag_row(entities, "tag entity-tag")}</div>
+                <div class="paper-grid">
+                    <div>
+                        <div class="chip-group-title">Keywords</div>
+                        <div class="tag-row">{render_tag_row(keywords)}</div>
+                    </div>
+                    <div>
+                        <div class="chip-group-title">Named Entities</div>
+                        <div class="tag-row">{render_tag_row(entities, "tag entity-tag")}</div>
+                    </div>
                 </div>
-            </div>
+            </article>
             """,
             unsafe_allow_html=True,
         )
@@ -482,8 +827,7 @@ def render_footer() -> None:
     st.markdown(
         """
         <div class="footer">
-            Built for research exploration with FastAPI, FAISS, Sentence Transformers,
-            KeyBERT, BERT NER, and BART-Large-CNN.
+            Built using FastAPI • FAISS • Sentence Transformers • KeyBERT • BERT NER • BART-Large-CNN
         </div>
         """,
         unsafe_allow_html=True,
@@ -499,9 +843,9 @@ def main() -> None:
     with st.form("search_form"):
         query = st.text_input(
             "Research question",
-            placeholder="Example: transformer architectures for efficient document summarization",
+            placeholder="Search for topics like efficient transformers, graph neural networks, or RAG evaluation",
         )
-        col_k, col_button = st.columns([1, 2])
+        col_k, col_button = st.columns([0.85, 2.15])
         with col_k:
             k = st.slider("Top K papers", min_value=1, max_value=10, value=3)
         with col_button:
@@ -512,16 +856,22 @@ def main() -> None:
         if not query.strip():
             st.warning("Enter a research question to start the search.")
         else:
-            with st.spinner("Searching papers and generating the synthesis..."):
-                try:
-                    payload = search_papers(query.strip(), k)
-                except RuntimeError as exc:
-                    st.error(str(exc))
-                else:
-                    render_metrics(payload)
-                    render_summary(payload)
-                    st.divider()
-                    render_top_papers(payload)
+            status = st.status("Searching papers...", expanded=True)
+            status.write("Generating embeddings...")
+            status.write("Running semantic search...")
+            status.write("Extracting keywords and named entities...")
+            status.write("Generating AI summary...")
+
+            try:
+                payload = search_papers(query.strip(), k)
+            except RuntimeError as exc:
+                status.update(label="Search failed", state="error", expanded=False)
+                st.error(str(exc))
+            else:
+                status.update(label="Research synthesis complete", state="complete", expanded=False)
+                render_metrics(payload)
+                render_summary(payload)
+                render_top_papers(payload)
     else:
         st.markdown(
             """
